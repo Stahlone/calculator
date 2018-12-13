@@ -18,8 +18,17 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
+}
+
+h1 {
+    font-family: monospace;
+    color: white;
+    font-size: 4rem;
+    margin-top: -10rem;
+    margin-bottom: 10rem;
 }
 
 .calculator {
@@ -72,13 +81,12 @@ button {
     height: 4rem; 
 }
 
-.btn-dark { background: rgb(20, 20, 20); }
+.btn-op { background: rgb(20, 20, 20); }
+
+#btn-clear,
+#btn-back { background: rgb(194, 41, 41); }
 
 button[value="="] { 
     height: auto;
     background: rgba(255, 142, 50, 0.877); 
 }
-
-button[name="clear"] { background: rgb(194, 41, 41); }
-
-/* Note, changed every instance of 'form' to '.calculator */

@@ -152,7 +152,9 @@ window.onkeydown = function(e){
  */
 
 // limit nunmber input/output to display size
+
 // only one comma on display FOR EACH NUMBER
+
 // implement every feature on keyboard
 
 
@@ -169,3 +171,12 @@ window.onkeydown = function(e){
 // keyboar support
 // e.key and e.target.value are the key to solve this
 // try to unify this variables depending on the element that triggers the event
+
+
+// display.addEventListener('change', function(){
+//     console.log(display.value.length);
+//     if (dislay.value.length > 10) {
+//         display.value = display.value.substr(0, 10);
+//     }
+// })
+
