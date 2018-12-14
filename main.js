@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", () => display.value = '');
  */
 
 // display
-let display = document.querySelector('input');
+let display = document.getElementById('screen');
 // numeric buttons 
 let btnNum = document.querySelectorAll('.btn-num');
+// comma
+let btnComma = document.getElementById('btn-comma');
 // operator buttons
 let btnOper = document.querySelectorAll('.btn-op');
 // back
@@ -27,6 +29,8 @@ btnNum.forEach(function(btn){
     btn.addEventListener('click', addNum);
 })
 
+btnComma.addEventListener('click', addComma);
+
 btnOper.forEach(function(btn){
     btn.addEventListener('click', addOper);
 })
@@ -44,7 +48,25 @@ btnResult.addEventListener('click', result);
 
 function addNum(e){
     removeResultIdAndClear();
-    display.value += e.target.value;
+    let displayNumbers = display.value.split(/[-+*\/]/);
+    // prevents inserting zeroes before a positive integer
+    // or multiple zeroes before a comma
+    // avoid possible parsing errors when converting numbers with
+    // leading zeroes into octal numbers
+    if (!displayNumbers[displayNumbers.length - 1].endsWith('0')){
+        display.value += e.target.value;
+    } else if (displayNumbers[displayNumbers.length - 1].length >= 2){
+        display.value += e.target.value;
+    }
+}
+
+function addComma(e){
+    removeResultIdAndClear();
+    // prevents more than one instance of '.' on a number
+    let displayNumbers = display.value.split(/[-+*\/]/);
+    if (!displayNumbers[displayNumbers.length - 1].includes('.')){
+        display.value += e.target.value;
+    }
 }
 
 function addOper(e){
@@ -72,16 +94,14 @@ function clear(){
 
 function result(){
     if (checkValidDisplay()){
-        if ((/\/0/).test(display.value)){
+        let check = eval(display.value);
+        // check for any division by zero
+        if (check === Infinity || check === -Infinity || isNaN(check)){
             display.value = 'Error';
         } else {
-            try {
-                display.value = eval(display.value);
-            } catch(e){
-                display.value = 'Error';
-            }
+            display.value = check;
         }
-        display.setAttribute('id', 'show-result');
+        display.setAttribute('class', 'show-result');
     }
 }
 
@@ -93,17 +113,17 @@ function result(){
 // check if display isn't empty, the previous element isn't an operator
 // and if there's an error message
 function checkValidDisplay(){
-    return display.value !== '' && display.value && (/\d$/).test(display.value) && !(/[a-z]/).test(display.value);
+    return display.value !== '' && (/\d$/).test(display.value) && !(/[a-z]/).test(display.value);
 }
 
 // After hitting the result button, pressing any number will clear the display
-// this is handled creating an id of 'show-result' on the display after hitting result
+// this is handled creating a class of 'show-result' on the display after hitting result
 // this id has to be removed when any other button besides result is pressed
 
 // for operator, clear and back buttons
 function removeResultId(){
-    if (display.getAttribute('id') === 'show-result'){
-        display.removeAttribute('id');
+    if (display.getAttribute('class') === 'show-result'){
+        display.removeAttribute('class');
         return true;
     }
 }
@@ -153,9 +173,10 @@ window.onkeydown = function(e){
 
 // limit nunmber input/output to display size
 
-// only one comma on display FOR EACH NUMBER
-
 // implement every feature on keyboard
+
+// look for invalid operation, divide by 0
+// then disable result screena nd display a warning
 
 
 
@@ -164,19 +185,7 @@ window.onkeydown = function(e){
 //     return (/[-+*\/]/).test(display.value);
 // }
 
-//    /[-+*\/]/  use this regex to split the screen display value
-// and only allow inserting a comma on the last element of the array
-// if it doesn't include one already
 
-// keyboar support
+// keyboard support
 // e.key and e.target.value are the key to solve this
 // try to unify this variables depending on the element that triggers the event
-
-
-// display.addEventListener('change', function(){
-//     console.log(display.value.length);
-//     if (dislay.value.length > 10) {
-//         display.value = display.value.substr(0, 10);
-//     }
-// })
-
