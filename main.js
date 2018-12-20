@@ -98,9 +98,12 @@ function result(){
         // check for any division by zero
         if (check === Infinity || check === -Infinity || isNaN(check)){
             display.value = 'Error';
+        } else if (check.toString().length > 8) {
+            display.value = expo(check, 6);
         } else {
             display.value = check;
         }
+
         display.setAttribute('class', 'show-result');
     }
 }
@@ -113,7 +116,7 @@ function result(){
 // check if display isn't empty, the previous element isn't an operator
 // and if there's an error message
 function checkValidDisplay(){
-    return display.value !== '' && (/\d$/).test(display.value) && !(/[a-z]/).test(display.value);
+    return display.value !== '' && (/\d$/).test(display.value) && display.value !== 'Error';
 }
 
 // After hitting the result button, pressing any number will clear the display
@@ -135,6 +138,11 @@ function removeResultIdAndClear(){
     }
 }
 
+// for the result button, limits length of result output
+function expo(x, f) {
+    return Number.parseFloat(x).toExponential(f);
+}
+  
 
 /**
  * Keyboard support

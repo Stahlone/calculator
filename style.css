@@ -40,7 +40,9 @@ h1 {
 }
 
 #screen { grid-column: span 4; }
+
 button[value="0"] { grid-column: span 2; }
+
 button[value="="] { grid-row: span 2; }
 
 
@@ -63,7 +65,7 @@ body { background: rgb(110, 105, 105); }
 
 #screen { 
     width: 100%;
-    font-size: 2rem;
+    font-size: 3rem;
     height: 6rem;
     margin-bottom: 1rem;
     border-radius: 0;
@@ -99,5 +101,16 @@ button[value="="] {
  */
 
 @media (max-width: 400px){
-    h1 { margin-bottom: 5rem; }
+
+    body { background: rgb(58, 56, 56); }
+    
+    h1 {
+        font-size: 3rem;
+        margin-top: 0;
+        margin-bottom: 5rem; 
+    }
+    
+    .calculator { max-width: 100%; }
+
+    button { height: 5rem; }
 }
