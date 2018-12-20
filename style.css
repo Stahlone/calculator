@@ -8,6 +8,37 @@ html { padding: 0; }
 
 html { font-size: 10px; }
 
+/** 
+* Custom Fonts
+*/
+
+@font-face {
+    font-family: 'digital-7_monomono';
+    src: url('fonts/digital-7.mono-webfont.woff2') format('woff2'),
+         url('fonts/digital-7.mono-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'digital-7_monoitalic';
+    src: url('fonts/digital-7.monoitalic-webfont.woff2') format('woff2'),
+         url('fonts/digital-7.monoitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'digital-7regular';
+    src: url('fonts/digital-7.regular-webfont.woff2') format('woff2'),
+         url('fonts/digital-7.regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 
 /**
  * Main layout and positioning
@@ -24,7 +55,7 @@ body {
 }
 
 h1 {
-    font-family: monospace;
+    font-family: 'digital-7_monomono';
     text-align: center;
     color: rgb(219, 219, 219);
     font-size: 4rem;
@@ -52,15 +83,24 @@ button[value="="] { grid-row: span 2; }
 
 body { background: rgb(110, 105, 105); }
 
+#intro {
+    margin-top: -10rem;
+    font-size: 2rem;
+    color: rgb(26, 26, 26);
+    font-family: monospace;
+}   
+
 .calculator {
     background: rgb(58, 56, 56);
     padding: 2rem;
     border-radius: 1.5rem;
+    box-shadow: 5px 5px rgb(37, 37, 37),
+                10px 10px rgb(37, 37, 37);
 }
 
 .calculator > * { 
     font-size: 3rem;
-    font-family: monospace; 
+    font-family: 'digital-7_monoitalic';
 }
 
 #screen { 
@@ -68,12 +108,23 @@ body { background: rgb(110, 105, 105); }
     font-size: 2.5rem;
     height: 6rem;
     margin-bottom: 1rem;
-    border-radius: 0;
-    border: none;
+    border-radius: 5px;
+    border: 5px solid #555655;
     background: rgb(191, 211, 144);
     padding: 1rem;
     text-align: right;
     color: rgb(44, 44, 44);
+}
+
+#logo {
+    grid-column: span 4;
+    font-size: 10px;
+    font-family: monospace;
+    color: orange;
+    margin-top: -2.6rem;
+    background: #555655;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 button { 
@@ -82,7 +133,14 @@ button {
     border: none;
     padding-left: 0;
     padding-right: 0;
-    height: 4rem; 
+    height: 4rem;
+    box-shadow: 3px 3px rgb(34, 34, 34);
+    border-radius: 5px; 
+}
+
+button:active {
+    transform: translate3d(2px, 1px, 3px);
+    box-shadow: none;
 }
 
 .btn-op { background: rgb(20, 20, 20); }
@@ -104,13 +162,14 @@ button[value="="] {
 
     body { background: rgb(58, 56, 56); }
     
-    h1 {
-        font-size: 3rem;
-        margin-top: 0;
-        margin-bottom: 5rem; 
-    }
+    /* h1 { display: none; } */
     
-    .calculator { max-width: 100%; }
+    #intro { display: none; }
+    
+    .calculator { 
+        max-width: 100%; 
+        box-shadow: none;
+    }
 
     button { height: 5rem; }
 }

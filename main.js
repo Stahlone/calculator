@@ -185,11 +185,15 @@ window.onkeydown = function(e){
  * 
  *  limit nunmber input/output to display size
  *  get left overflow working (direction rtl fix)
- * 
- *  look for invalid operation, divide by 0
- *  then disable result screen and display a warning
+ *  
+ *  create a message display screen
+ *  to provide feedback upon error
+ *  and feeback to the user when the result key is not 
+ *  working due to an invalid operation on screen
  * 
  *  display exponential numbers as '*10 <sup>x</sup>'
+ *
+ *  make keyboard input trigger button press 'animation'
  * 
  *  overall refactor and cleaning of the code
  * 
