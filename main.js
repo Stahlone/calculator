@@ -43,6 +43,7 @@ btnResult.addEventListener('click', result);
  */
 
 function addNum(e){
+    let inputVal = e.key || e.target.value;
     removeResultIdAndClear();
     let displayNumbers = display.value.split(/[-+*\/]/);
     // prevents inserting zeroes before a positive integer
@@ -50,32 +51,34 @@ function addNum(e){
     // avoid possible parsing errors when converting numbers with
     // leading zeroes into octal numbers
     if (!displayNumbers[displayNumbers.length - 1].endsWith('0')){
-        display.value += e.target.value;
+        display.value += inputVal;
     } else if (displayNumbers[displayNumbers.length - 1].length >= 2){
-        display.value += e.target.value;
+        display.value += inputVal;
     }
 }
 
 function addComma(e){
+    let inputVal = e.key || e.target.value;
     removeResultIdAndClear();
     // prevents more than one instance of '.' on a number
     let displayNumbers = display.value.split(/[-+*\/]/);
     if (!displayNumbers[displayNumbers.length - 1].includes('.')){
-        display.value += e.target.value;
+        display.value += inputVal;
     }
 }
 
 function addOper(e){
+    let inputVal = e.key || e.target.value;
     // ability to operate with negative numbers
-    if (!display.value.endsWith('-') && e.target.value === '-'){
-        display.value += e.target.value;
+    if (!display.value.endsWith('-') && inputVal === '-'){
+        display.value += inputVal;
+        removeResultId();
     } else if (checkValidDisplay()){
-        display.value += e.target.value;
+        display.value += inputVal;
         removeResultId();
     }
 }
 
-// add check for error on eveyr function
 function back(){
     if (display.value !== 'Error'){
         display.value = display.value.substring(0, display.value.length -1);
@@ -99,7 +102,7 @@ function result(){
         } else {
             display.value = check;
         }
-
+        // class needed to clear result display upon pressing a number
         display.setAttribute('class', 'show-result');
     }
 }
@@ -112,7 +115,7 @@ function result(){
 // check if display isn't empty, the previous element isn't an operator
 // and if there's an error message
 function checkValidDisplay(){
-    return display.value !== '' && (/\d$/).test(display.value) && display.value !== 'Error';
+    return display.value !== '' && (/[0-9.]$/).test(display.value) && display.value !== 'Error';
 }
 
 // After hitting the result button, pressing any number will clear the display
@@ -134,7 +137,8 @@ function removeResultIdAndClear(){
     }
 }
 
-// for the result button, limits length of result output
+// for the result button, limits length of result output 
+// displaying longer numbers as exponentials
 function expo(x, f) {
     return Number.parseFloat(x).toExponential(f);
 }
@@ -148,15 +152,19 @@ window.onkeydown = function(e){
     
     let btnKey = e.key;
 
-    if (Object.values(btnOper).some(elem => elem.textContent == btnKey)){
-        removeResultId();
-        display.value += btnKey;
-    } else if (Object.values(btnNum).some(elem => elem.textContent == btnKey)){
-        removeResultIdAndClear();
-        display.value += btnKey;
+    // check if the key pressed corresponds to a button number
+    if (Object.values(btnNum).some(elem => elem.textContent == btnKey)){
+        addNum(e);
     }
-
+    // check if the key pressed corresponds to a button operator
+    if (Object.values(btnOper).some(elem => elem.textContent == btnKey)){
+        addOper(e);
+    }
+    // handle the rest of possible operations
     switch(btnKey){
+        case '.':
+            addComma(e);
+            break;
         case 'Backspace':
             back();
             break;
@@ -165,6 +173,7 @@ window.onkeydown = function(e){
             clear();
             break;
         case 'Enter':
+        case '=':
             result();
             break;
     }
@@ -173,23 +182,22 @@ window.onkeydown = function(e){
 
 /**
  * TO-DO
+ * 
+ *  limit nunmber input/output to display size
+ *  get left overflow working (direction rtl fix)
+ * 
+ *  look for invalid operation, divide by 0
+ *  then disable result screen and display a warning
+ * 
+ *  display exponential numbers as '*10 <sup>x</sup>'
+ * 
+ *  overall refactor and cleaning of the code
+ * 
  */
 
-// limit nunmber input/output to display size
-
-// implement every feature on keyboard
-
-// look for invalid operation, divide by 0
-// then disable result screena nd display a warning
-
-
-
-// check if there's a mathematical operation to evaluate on display
-// function checkOperation(){
-//     return (/[-+*\/]/).test(display.value);
-// }
-
-
-// keyboard support
-// e.key and e.target.value are the key to solve this
-// try to unify this variables depending on the element that triggers the event
+/**
+ * Known bugs
+ * 
+ *  Sometimes when switching from button to keyboard input, the enter/equal key
+ *  won't trigger the result function correctly
+ */
