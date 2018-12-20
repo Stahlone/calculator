@@ -25,15 +25,11 @@ let btnResult = document.getElementById('btn-result');
  * Listeners
  */
 
-btnNum.forEach(function(btn){
-    btn.addEventListener('click', addNum);
-})
+btnNum.forEach(btn => btn.addEventListener('click', addNum));
 
 btnComma.addEventListener('click', addComma);
 
-btnOper.forEach(function(btn){
-    btn.addEventListener('click', addOper);
-})
+btnOper.forEach(btn => btn.addEventListener('click', addOper));
 
 btnBack.addEventListener('click', back);
 
@@ -70,9 +66,9 @@ function addComma(e){
 }
 
 function addOper(e){
-    // ability to input negative numbers
-    if (display.value === '' && e.target.value === '-'){
-        display.value = '-';
+    // ability to operate with negative numbers
+    if (!display.value.endsWith('-') && e.target.value === '-'){
+        display.value += e.target.value;
     } else if (checkValidDisplay()){
         display.value += e.target.value;
         removeResultId();
